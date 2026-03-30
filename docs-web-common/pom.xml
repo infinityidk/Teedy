@@ -130,4 +130,8 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <outputDirectory>../target/site/docs-web-common</outputDirectory>
+  </reporting>
 </project>

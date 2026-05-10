@@ -191,11 +191,11 @@ public class TestAppResource extends BaseJerseyTest {
         String adminToken = adminToken();
 
         // Get OCR configuration
-        JsonObject json = target().path("/app/ocr").request()
+        JsonObject json = target().path("/app").request()
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, adminToken)
                 .get(JsonObject.class);
         if (!configInboxChanged) {
-            Assert.assertFalse(json.getBoolean("enabled"));
+            Assert.assertFalse(json.getBoolean("ocr_enabled"));
         }
 
         // Change OCR configuration
@@ -207,10 +207,16 @@ public class TestAppResource extends BaseJerseyTest {
         configInboxChanged = true;
 
         // Get OCR configuration
-        json = target().path("/app/ocr").request()
+        json = target().path("/app").request()
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, adminToken)
                 .get(JsonObject.class);
-        Assert.assertTrue(json.getBoolean("enabled"));
+        Assert.assertTrue(json.getBoolean("ocr_enabled"));
+
+        target().path("/app/ocr").request()
+                .cookie(TokenBasedSecurityFilter.COOKIE_NAME, adminToken)
+                .post(Entity.form(new Form()
+                        .param("enabled", "false")
+                ), JsonObject.class);
     }
 
     /**

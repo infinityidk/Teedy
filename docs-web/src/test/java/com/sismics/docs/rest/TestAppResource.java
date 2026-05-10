@@ -47,6 +47,11 @@ public class TestAppResource extends BaseJerseyTest {
         // Login admin
         String adminToken = adminToken();
 
+        target().path("/app/ocr").request()
+                        .cookie(TokenBasedSecurityFilter.COOKIE_NAME, adminToken)
+                        .post(Entity.form(new Form()
+                                        .param("enabled", "false")), JsonObject.class);
+
         // Check the application info
         JsonObject json = target().path("/app").request()
                 .get(JsonObject.class);

@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
         stage('Clean') { steps { sh 'mvn clean' } }
-        stage('Install') { steps { sh 'mvn install' } }
+        stage('Install') { steps { sh 'mvn install -Pprod' } }
         stage('PMD') { steps { sh 'mvn pmd:pmd' } }
         stage('JaCoCo') { steps { sh 'mvn jacoco:report' } }
         stage('Javadoc') { steps { sh 'mvn javadoc:javadoc' } }
